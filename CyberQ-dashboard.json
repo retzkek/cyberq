@@ -46,6 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
+  "iteration": 1605383794034,
   "links": [],
   "panels": [
     {
@@ -96,6 +97,12 @@
           "$$hashKey": "object:150",
           "alias": "Output",
           "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:601",
+          "alias": "Set Temp",
+          "color": "#F2495C",
+          "linewidth": 4
         }
       ],
       "spaceLength": 10,
@@ -105,8 +112,14 @@
         {
           "expr": "cyberq_cook_temp",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "Pit Temp",
           "refId": "A"
+        },
+        {
+          "expr": "cyberq_cook_set_temp",
+          "interval": "",
+          "legendFormat": "Set Temp",
+          "refId": "C"
         },
         {
           "expr": "cyberq_output_percent",
@@ -164,6 +177,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${DS_PROMETHEUS}",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -175,7 +189,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 24,
+        "w": 8,
         "x": 0,
         "y": 9
       },
@@ -201,23 +215,37 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "repeat": "Probe",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:718",
+          "alias": "Set",
+          "color": "#F2495C",
+          "linewidth": 4
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "cyberq_food_temp > 0",
+          "expr": "cyberq_food_temp{probe_number=\"$Probe\"} > 0",
           "interval": "",
-          "legendFormat": "{{probe_number}}",
+          "legendFormat": "Temp",
           "refId": "A"
+        },
+        {
+          "expr": "cyberq_food_set_temp{probe_number=\"$Probe\"} > 0",
+          "interval": "",
+          "legendFormat": "Set",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Food Temperature",
+      "title": "Food $Probe Temperature",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -233,14 +261,17 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:698",
+          "decimals": null,
           "format": "fahrenheit",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:699",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -260,15 +291,39 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "label_values(cyberq_food_temp, probe_number)",
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "Probe",
+        "options": [],
+        "query": "label_values(cyberq_food_temp, probe_number)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "CyberQ",
   "uid": "njDDUVoGz",
-  "version": 4
+  "version": 5
 }
