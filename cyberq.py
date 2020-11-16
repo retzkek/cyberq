@@ -80,7 +80,7 @@ def main(url, port, addr):
         time.sleep(10)
 
 if __name__ == '__main__':
-    main()
+    main(auto_envvar_prefix='CYBERQ')
 
     
 
