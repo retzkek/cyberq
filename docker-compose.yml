@@ -13,7 +13,7 @@ services:
         source: prom_data
         target: /prometheus
   grafana:
-    image: grafana/grafana
+    build: grafana
     ports:
       - "127.0.0.1:3000:3000"
 volumes:
